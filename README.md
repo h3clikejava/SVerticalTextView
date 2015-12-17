@@ -19,3 +19,4 @@
 ### 缺点：
 
 由于继承的View，所以很多TextView特性没有，比如Html标签之类的。
+ ![image](https://github.com/h3clikejava/SVerticalTextView/blob/master/pic.png)
