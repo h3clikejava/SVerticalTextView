@@ -22,10 +22,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="edd1ade7-6ee7-45fa-8778-fe75e668df08" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/library/src/main/java/com/h3c/sverticaltextview/SVerticalTextView.java" afterPath="$PROJECT_DIR$/library/src/main/java/com/h3c/sverticaltextview/SVerticalTextView.java" />
-    </list>
+    <list default="true" id="edd1ade7-6ee7-45fa-8778-fe75e668df08" name="Default" comment="" />
     <ignored path="SVerticalTextView.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
