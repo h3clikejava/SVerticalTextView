@@ -28,6 +28,7 @@ public class SVerticalTextView extends View {
     private static int COLUMN_WIDTH;// 列宽
 
     private boolean isVertical = true;// 是否垂直显示文本
+    private boolean isShadow = true;// 文字阴影
     private String mText;// 文本
     private int mTextColor = Color.BLACK;// 文本颜色
     private float mMaxTextSize;// 最大文字大小[目前没有用到]
@@ -161,6 +162,13 @@ public class SVerticalTextView extends View {
             }
 
             if(point != null) {
+                // 绘制阴影
+                if(isShadow) {
+                    int textColor = mTextPaint.getColor();
+                    mTextPaint.setColor(Color.parseColor("#B5B5B5"));
+                    canvas.drawText(String.valueOf(c), point.x + 2 * DENSITY, point.y + 2 * DENSITY, mTextPaint);
+                    mTextPaint.setColor(textColor);
+                }
                 // 绘制文字
                 canvas.drawText(String.valueOf(c), point.x, point.y, mTextPaint);
             } else {
