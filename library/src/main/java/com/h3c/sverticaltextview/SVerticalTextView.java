@@ -1,11 +1,13 @@
 package com.h3c.sverticaltextview;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.text.TextUtils;
@@ -70,6 +72,11 @@ public class SVerticalTextView extends View {
 
         ROW_HEIGHT = (int)(0 * DENSITY);
         COLUMN_WIDTH = (int)(0 * DENSITY);
+
+        // 加载第三方字体
+        AssetManager mgr = getContext().getAssets();//得到AssetManager
+        Typeface tf = Typeface.createFromAsset(mgr, "jkt.TTF");
+        mTextPaint.setTypeface(tf);
     }
 
     /**
