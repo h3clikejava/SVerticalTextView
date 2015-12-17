@@ -20,10 +20,20 @@ public class MainActivity extends AppCompatActivity {
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(tv.getOrientation() == LinearLayout.HORIZONTAL) {
-                    tv.setOrientation(LinearLayout.VERTICAL);
+                // 横竖切换
+//                if(tv.getOrientation() == LinearLayout.HORIZONTAL) {
+//                    tv.setOrientation(LinearLayout.VERTICAL);
+//                } else {
+//                    tv.setOrientation(LinearLayout.HORIZONTAL);
+//                }
+
+                // 放大缩小
+                if(tv.getScaleX() == 0.5) {
+                    tv.setScaleX(0.5f);
+                    tv.setScaleY(0.5f);
                 } else {
-                    tv.setOrientation(LinearLayout.HORIZONTAL);
+                    tv.setScaleX(1);
+                    tv.setScaleY(1);
                 }
             }
         });
