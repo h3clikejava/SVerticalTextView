@@ -6,7 +6,7 @@
 
     <com.h3c.sverticaltextview.SVerticalTextView
         android:id="@+id/svtv"
-        android:visibility="visible"
+        android:visibility="invisible"
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:layout_centerHorizontal="true"

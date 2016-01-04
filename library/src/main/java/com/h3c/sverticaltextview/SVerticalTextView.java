@@ -34,7 +34,7 @@ public class SVerticalTextView extends View {
     private int mTextColor = Color.BLACK;// 文本颜色
     private int shadowColor = Color.WHITE;// 阴影颜色
     private float mMaxTextSize;// 最大文字大小
-    private int mMixTextSize = 10;// 最小文字大小
+    private int mMinTextSize = 16 * 3;// 最小文字大小
     private TextPaint mTextPaint;
 
     public SVerticalTextView(Context context) {
@@ -210,7 +210,7 @@ public class SVerticalTextView extends View {
                     lastCharPoint.x, lastCharPoint.y,
                     0, ((int)(0.5 * FONT_SIZE)),
                     isVertical, (int)FONT_SIZE,
-                    (isVertical ? viewWidth : viewWidth - paddingRight), viewHeight - paddingBottom);
+                    (int)(width - FONT_SIZE), (int)(height - FONT_SIZE));
 
             // 越界或者画完了
             if(lastCharPoint == null) break;
@@ -264,8 +264,8 @@ public class SVerticalTextView extends View {
         count = maxTextCountInColumn * maxTextCountInARow;
         if(isVertical) {
             minInColumn = maxTextCountInARow;
-            rowInfo[1] = maxTextCountInARow;
             rowInfo[0] = maxTextCountInColumn;
+            rowInfo[1] = maxTextCountInARow;
         } else {
             minInRow = maxTextCountInARow;
             rowInfo[0] = maxTextCountInARow;
@@ -295,16 +295,34 @@ public class SVerticalTextView extends View {
             }
         }
 
-        return (int) (realFontWidth > mMixTextSize ? realFontWidth : mMixTextSize);
-    }
+        // 文字小于最小字号，需要自动换行
+        if(realFontWidth < mMinTextSize) {
+            int maxCount;
 
-    /**
-     * 获得文字偏移，主要用于文字居中
-     * @return
-     */
-    private int getTextOffset(int viewWidth, float fontSize, int countInRow) {
-        int spaceWidth = (int)(viewWidth - fontSize * countInRow);// 空余位置的宽度
-        return spaceWidth >> 1;
+            if(isVertical) {
+                maxCount = height / mMinTextSize + COLUMN_WIDTH;
+            } else {
+                maxCount = width / mMinTextSize + COLUMN_WIDTH;
+            }
+
+            int moreCount = 0;// 多出来的列数
+            for (String rowStrInText : tmpNewLineTexts) {
+                if(maxCount < rowStrInText.length()) {
+                    moreCount += rowStrInText.length() / maxCount;
+                }
+            }
+
+            if(isVertical) {
+                rowInfo[0] += moreCount;
+                rowInfo[1] = maxCount;
+            } else {
+                rowInfo[0] = maxCount;
+                rowInfo[1] += moreCount;
+            }
+            realFontWidth = mMinTextSize;
+        }
+
+        return (int) realFontWidth;
     }
 
     /**
@@ -349,7 +367,7 @@ public class SVerticalTextView extends View {
                 newY = 0;
             } else {
                 newX = 0;
-                newY = lastX - fontSize - heightPadding;
+                newY = lastY + fontSize + heightPadding;
             }
         }
 
