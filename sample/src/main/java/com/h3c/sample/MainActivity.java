@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final SVerticalTextView tv = ((SVerticalTextView) findViewById(R.id.svtv));
-        tv.setText("梅兰芳的老师说输不丢人，怕才丢人，你说呢？");
+        tv.setText("天荒\n地老");
 
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -26,15 +26,6 @@ public class MainActivity extends AppCompatActivity {
 //                } else {
 //                    tv.setOrientation(LinearLayout.HORIZONTAL);
 //                }
-
-                // 放大缩小
-                if(tv.getScaleX() == 0.5) {
-                    tv.setScaleX(0.5f);
-                    tv.setScaleY(0.5f);
-                } else {
-                    tv.setScaleX(1);
-                    tv.setScaleY(1);
-                }
             }
         });
     }
