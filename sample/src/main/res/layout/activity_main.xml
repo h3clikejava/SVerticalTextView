@@ -4,17 +4,28 @@
     android:layout_height="match_parent"
     xmlns:SVerticalTextView="http://schemas.android.com/apk/res-auto">
 
+    <TextView
+        android:id="@+id/tv"
+        android:text="
+        ABCDEFGHIJKLMNOPQRSTUVWXYZ\n
+abcdefghijklmnopqrstuvwxyz\n
+What are you\n"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <com.h3c.sverticaltextview.SVerticalTextView
         android:id="@+id/svtv"
-        android:visibility="invisible"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
+        android:layout_marginTop="200dp"
+        android:visibility="visible"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
         android:layout_centerHorizontal="true"
         SVerticalTextView:SVerticalTextView_textColor="@android:color/black"
         android:text="我我是明星，我怕谁.xs" />
 
     <com.h3c.sverticaltextview.SVerticalTextView
         android:id="@+id/svtv2"
+        android:visibility="invisible"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/svtv"
         android:layout_marginTop="20dp"

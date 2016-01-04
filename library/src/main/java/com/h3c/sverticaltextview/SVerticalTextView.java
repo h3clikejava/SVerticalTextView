@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.text.TextPaint;
 import android.text.TextUtils;
@@ -35,6 +36,8 @@ public class SVerticalTextView extends View {
     private int shadowColor = Color.WHITE;// 阴影颜色
     private float mMaxTextSize;// 最大文字大小
     private int mMinTextSize = 16 * 3;// 最小文字大小
+    private int LETTER_PADDING = 2;// 字母间距
+    private int SPACE_PADDING = 4 * 3;// 空格间距
     private TextPaint mTextPaint;
 
     public SVerticalTextView(Context context) {
@@ -333,6 +336,92 @@ public class SVerticalTextView extends View {
                                                 int widthPadding, int heightPadding,
                                                 boolean isVertical, int fontSize,
                                                 int viewWidth, int viewHeight) {
+        boolean isLetter = (c >= 0x20 && c <= 0x7F);// 是否为字母
+        if(isLetter && !isVertical) {
+            if(c == 0x20) {// 空格宽度
+                fontSize = SPACE_PADDING;
+            } else {
+                Rect textBounds = new Rect();
+                mTextPaint.getTextBounds(String.valueOf(c), 0, 1, textBounds);
+                fontSize = textBounds.width() + LETTER_PADDING;
+
+                switch (c) {
+                    case 0x31:// 1.
+                        fontSize += 2 * DENSITY;
+                        break;
+                    case 0x33:// 3.
+                        fontSize += DENSITY;
+                        break;
+                    case 0x35:// 5.
+                        fontSize += DENSITY;
+                        break;
+                    case 0x38:// 8.
+                        fontSize += DENSITY;
+                        break;
+                    case 0x39:// 9.
+                        fontSize += DENSITY;
+                        break;
+                    case 0x41:// A.
+                        fontSize -= 3 * DENSITY;
+                    case 0x49:// I.
+                        fontSize += 2 * DENSITY;
+                        break;
+                    case 0x4D:// M.
+                        fontSize += DENSITY;
+                        break;
+                    case 0x4E:// N.
+                        fontSize += DENSITY;
+                        break;
+                    case 0x55:// U.
+                        fontSize += DENSITY;
+                        break;
+                    case 0x62:// b.
+                        fontSize += DENSITY;
+                        break;
+                    case 0x64:// d.
+                        fontSize += DENSITY;
+                        break;
+                    case 0x66:// f.
+                        fontSize -= DENSITY;
+                        break;
+                    case 0x67:// g.
+                        fontSize += DENSITY;
+                        break;
+                    case 0x68:// h.
+                    case 0x69:// i.
+                        fontSize += DENSITY;
+                        break;
+                    case 0x6C:// l.
+                        fontSize += DENSITY;
+                        break;
+                    case 0x6D:// m.
+                        fontSize += DENSITY;
+                        break;
+                    case 0x6E:// n.
+                        fontSize += DENSITY;
+                        break;
+                    case 0x70:// p.
+                        fontSize += DENSITY;
+                        break;
+                    case 0x71:// q.
+                        fontSize += DENSITY;
+                        break;
+                    case 0x72:// r.
+                        fontSize += DENSITY;
+                        break;
+                    case 0x73:// s.
+                        fontSize += DENSITY;
+                        break;
+                    case 0x75:// u.
+                        fontSize += DENSITY;
+                        break;
+                    case 0x79:// y.
+                        fontSize -= DENSITY;
+                        break;
+                }
+            }
+        }
+
         int addToOrientation;// 加载文字方向 0右，1下，2左
 
         if(NEW_LINE_CHAR == c) {
