@@ -6,9 +6,24 @@
 
     <com.h3c.sverticaltextview.SVerticalTextView
         android:id="@+id/svtv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        SVerticalTextView:SVerticalTextView_maxTextSize="30sp"
+        android:visibility="visible"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_centerHorizontal="true"
         SVerticalTextView:SVerticalTextView_textColor="@android:color/black"
         android:text="我我是明星，我怕谁.xs" />
+
+    <com.h3c.sverticaltextview.SVerticalTextView
+        android:id="@+id/svtv2"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/svtv"
+        android:layout_marginTop="20dp"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        SVerticalTextView:SVerticalTextView_textColor="@android:color/black"
+        android:text="我我是明星\n我怕谁.xs" />
 </RelativeLayout>
