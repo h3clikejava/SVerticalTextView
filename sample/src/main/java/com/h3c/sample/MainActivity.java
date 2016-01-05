@@ -20,7 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
         final SVerticalTextView tv = ((SVerticalTextView) findViewById(R.id.svtv));
 //        tv.setText("天荒看你了呢\n地老昆士兰弗兰克阿莱克斯能否离开我呢份", false, true);
-        tv.setText("Why are you so Diao?", false, true);
+//        tv.setText("Why are you so Diao", true, true);
+        tv.setText("What are you doing!?\nDo you like ice?", true, true);
 
         final SVerticalTextView tv2 = ((SVerticalTextView) findViewById(R.id.svtv2));
         tv2.setText("天荒看你了呢\n地老昆士兰弗兰克阿莱克斯能否离开我呢份快乐饿了咖啡能为了肯放开论文疯了快五年翻了可能为分开两年未开发为嫩肤\n你\nsnnw 问哦", false, true);

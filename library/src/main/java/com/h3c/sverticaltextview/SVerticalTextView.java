@@ -251,7 +251,124 @@ public class SVerticalTextView extends View {
             } else {
                 Point charPoint = charPoints[n];
                 if(charPoint == null) break;// 文字越界不绘制
-                canvas.drawText(String.valueOf(c), charPoint.x + XOffset, charPoint.y + YOffset, mTextPaint);
+
+                int charDrawX = charPoint.x + XOffset;
+                int charDrawY = charPoint.y + YOffset;
+                // 字母竖排修正X位置
+                if(isVertical) {
+                    if(c >= 0x21 && c <= 0x7E) {
+                        switch (c) {
+                            case '0':
+                            case '1':
+                            case '2':
+                            case '3':
+                            case '4':
+                            case '5':
+                            case '6':
+                            case '7':
+                            case '8':
+                            case '9':
+                                charDrawX += FONT_SIZE * 0.2;
+                                break;
+                            case 'C':
+                            case 'H':
+                            case 'K':
+                            case 'G':
+                            case 'N':
+                            case 'O':
+                            case 'Q':
+                                charDrawX += FONT_SIZE * 0.1;
+                                break;
+                            case 'A':
+                            case 'B':
+                            case 'D':
+                            case 'E':
+                            case 'F':
+                            case 'J':
+                            case 'P':
+                            case 'L':
+                            case 'R':
+                            case 'S':
+                            case 'T':
+                            case 'U':
+                            case 'V':
+                            case 'X':
+                            case 'Y':
+                            case 'Z':
+                                charDrawX += FONT_SIZE * 0.15;
+                                break;
+                            case 'I':
+                                charDrawX += FONT_SIZE * 0.3;
+                                break;
+                            case 'a':
+                            case 'b':
+                            case 'c':
+                            case 'd':
+                            case 'e':
+                            case 'g':
+                            case 'h':
+                            case 'k':
+                            case 'n':
+                            case 'o':
+                            case 'p':
+                            case 'q':
+                            case 's':
+                            case 'u':
+                            case 'z':
+                                charDrawX += FONT_SIZE * 0.2;
+                                break;
+                            case 'f':
+                            case 'v':
+                            case 'x':
+                            case 'y':
+                                charDrawX += FONT_SIZE * 0.25;
+                                break;
+                            case 'i':
+                            case 'j':
+                            case 'l':
+                                charDrawX += FONT_SIZE * 0.35;
+                                break;
+                            case 'r':
+                            case 't':
+                                charDrawX += FONT_SIZE * 0.3;
+                                break;
+                            case 'w':
+                                charDrawX += FONT_SIZE * 0.1;
+                                break;
+                            case '?':
+                            case '.':
+                            case ',':
+                            case '/':
+                            case '$':
+                            case '&':
+                            case '(':
+                            case '=':
+                            case '+':
+                            case '_':
+                            case '<':
+                            case '>':
+                                charDrawX += FONT_SIZE * 0.2;
+                                break;
+                            case '~':
+                            case '#':
+                            case '%':
+                                charDrawX += FONT_SIZE * 0.1;
+                                break;
+                            case '-':
+                            case '*':
+                            case '^':
+                            case '!':
+                            case ')':
+                            case '|':
+                            case ':':
+                            case ';':
+                            case '`':
+                                charDrawX += FONT_SIZE * 0.3;
+                                break;
+                        }
+                    }
+                }
+                canvas.drawText(String.valueOf(c), charDrawX, charDrawY, mTextPaint);
             }
         }
 
@@ -383,76 +500,76 @@ public class SVerticalTextView extends View {
                 fontSize = textBounds.width() + LETTER_PADDING;
 
                 switch (c) {
-                    case 0x31:// 1.
+                    case '1':// 1.
                         fontSize += 2 * DENSITY;
                         break;
-                    case 0x33:// 3.
+                    case '3':// 3.
                         fontSize += DENSITY;
                         break;
-                    case 0x35:// 5.
+                    case '5':// 5.
                         fontSize += DENSITY;
                         break;
-                    case 0x38:// 8.
+                    case '8':// 8.
                         fontSize += DENSITY;
                         break;
-                    case 0x39:// 9.
+                    case '9':// 9.
                         fontSize += DENSITY;
                         break;
-                    case 0x41:// A.
+                    case 'A':// A.
                         fontSize -= 3 * DENSITY;
-                    case 0x49:// I.
+                    case 'I':// I.
                         fontSize += 2 * DENSITY;
                         break;
-                    case 0x4D:// M.
+                    case 'M':// M.
                         fontSize += DENSITY;
                         break;
-                    case 0x4E:// N.
+                    case 'N':// N.
                         fontSize += DENSITY;
                         break;
-                    case 0x55:// U.
+                    case 'U':// U.
                         fontSize += DENSITY;
                         break;
-                    case 0x62:// b.
+                    case 'b':// b.
                         fontSize += DENSITY;
                         break;
-                    case 0x64:// d.
+                    case 'd':// d.
                         fontSize += DENSITY;
                         break;
-                    case 0x66:// f.
+                    case 'f':// f.
                         fontSize -= DENSITY;
                         break;
-                    case 0x67:// g.
+                    case 'g':// g.
                         fontSize += DENSITY;
                         break;
-                    case 0x68:// h.
-                    case 0x69:// i.
+                    case 'h':// h.
+                    case 'i':// i.
                         fontSize += DENSITY;
                         break;
-                    case 0x6C:// l.
+                    case 'l':// l.
                         fontSize += DENSITY;
                         break;
-                    case 0x6D:// m.
+                    case 'm':// m.
                         fontSize += DENSITY;
                         break;
-                    case 0x6E:// n.
+                    case 'n':// n.
                         fontSize += DENSITY;
                         break;
-                    case 0x70:// p.
+                    case 'p':// p.
                         fontSize += DENSITY;
                         break;
-                    case 0x71:// q.
+                    case 'q':// q.
                         fontSize += DENSITY;
                         break;
-                    case 0x72:// r.
+                    case 'r':// r.
                         fontSize += DENSITY;
                         break;
-                    case 0x73:// s.
+                    case 's':// s.
                         fontSize += DENSITY;
                         break;
-                    case 0x75:// u.
+                    case 'u':// u.
                         fontSize += DENSITY;
                         break;
-                    case 0x79:// y.
+                    case 'y':// y.
                         fontSize -= DENSITY;
                         break;
                 }
