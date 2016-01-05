@@ -233,6 +233,8 @@ public class SVerticalTextView extends View {
         // 绘制阴影
         if(isShadow) {
             mTextPaint.setShadowLayer(15, 0, 0, shadowColor);
+        } else {
+            mTextPaint.setShadowLayer(0, 0, 0, shadowColor);
         }
 
 //        mTextPaint.setColor(Color.RED);
