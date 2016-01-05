@@ -372,6 +372,7 @@ public class SVerticalTextView extends View {
                                                 int widthPadding, int heightPadding,
                                                 boolean isVertical, int fontSize,
                                                 int viewWidth, int viewHeight) {
+        int originalFontSize = fontSize;
         boolean isLetter = (c >= 0x20 && c <= 0x7F);// 是否为字母
         if(isLetter && !isVertical) {
             if(c == 0x20) {// 空格宽度
@@ -492,7 +493,7 @@ public class SVerticalTextView extends View {
                 newY = 0;
             } else {
                 newX = 0;
-                newY = lastY + fontSize + heightPadding;
+                newY = lastY + originalFontSize + heightPadding;
             }
         }
 
