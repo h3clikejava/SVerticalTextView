@@ -223,7 +223,9 @@ public class SVerticalTextView extends View {
         // 计算居中偏移
         int XOffset;
         if(isVertical) {
-            XOffset = -(int)((((viewWidth - maxWidth - paddingRight) / 2 + maxWidth) - (paddingLeft + width / 2)) - (0.5 * ROW_HEIGHT));
+            XOffset = (int)(paddingLeft - ((maxWidth + (0.5 * ROW_HEIGHT)
+                    - (paddingLeft + width / 2)))
+                    - ((viewWidth - maxWidth - paddingRight - (0.5 * ROW_HEIGHT)) / 2));
         } else {
             XOffset = (int)(paddingLeft + (width - maxWidth - FONT_SIZE) / 2);
         }
@@ -240,9 +242,8 @@ public class SVerticalTextView extends View {
 //        mTextPaint.setColor(Color.RED);
 //        canvas.drawLine(0, maxHeight, viewWidth, maxHeight, mTextPaint);
 //        canvas.drawLine(maxWidth, 0, maxWidth, viewHeight, mTextPaint);
+//        canvas.drawLine((int)(maxWidth + (0.5 * ROW_HEIGHT)), 0, (int)(maxWidth + (0.5 * ROW_HEIGHT)), viewHeight, mTextPaint);
 //        canvas.drawLine((paddingLeft + width / 2), 0, (paddingLeft + width / 2), viewHeight, mTextPaint);
-//        canvas.drawLine(((viewWidth - maxWidth - paddingRight) / 2 + maxWidth), 0,
-//                ((viewWidth - maxWidth - paddingRight) / 2 + maxWidth), viewHeight, mTextPaint);
 
         // 画文字
         for (int n = 0; n < charsLength; n++) {
