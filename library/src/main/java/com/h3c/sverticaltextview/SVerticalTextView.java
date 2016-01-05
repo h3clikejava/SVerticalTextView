@@ -177,8 +177,8 @@ public class SVerticalTextView extends View {
         if(width == 0 || height == 0 || FONT_SIZE == 0) return;
 
         // 文字基线［目前没有用到］
-//        Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
-//        float baseLineHeight = fontMetrics.descent;
+        Paint.FontMetrics fontMetrics = mTextPaint.getFontMetrics();
+        float baseLineHeight = fontMetrics.descent;
 
         if(IS_DEBUG) {
 //            // 绘制文字大小
@@ -190,42 +190,67 @@ public class SVerticalTextView extends View {
             canvas.drawRect(paddingLeft, paddingTop, viewWidth - paddingRight, viewHeight - paddingBottom, testPaint);
         }
 
-        // 分段绘制文字
+        // 提前计算出各个文字绘制的位子
         char[] chars = mText.toCharArray();
+        int charsLength = chars.length;
+        Point[] charPoints = new Point[charsLength];
+        charPoints[0] = new Point(
+                isVertical ? (int)(width - FONT_SIZE) : 0, // 上一个文字的X
+                0);// 上一行文字的Y[文字底部的值]
+        int maxWidth = charPoints[0].x;
+        int maxHeight = charPoints[0].y;
+        for (int n = 1; n < charsLength; n++) {
+            charPoints[n] = measureCharHorizontalPosition(chars[n - 1],
+                    charPoints[n - 1].x, charPoints[n - 1].y,
+                    0, ((int)(0.5 * FONT_SIZE)),
+                    isVertical, (int)FONT_SIZE,
+                    (int)(width - FONT_SIZE), (int)(height - FONT_SIZE));
+
+            if(charPoints[n] == null) break;// 越界不画
+            if(NEW_LINE_CHAR == chars[n]) continue;// 换行不算距离
+            if(charPoints[n].y > maxHeight) {
+                maxHeight = charPoints[n].y;
+            }
+
+            if(isVertical && charPoints[n].x < maxWidth) {
+                maxWidth = charPoints[n].x;
+            } else if(!isVertical && charPoints[n].x > maxWidth) {
+                maxWidth = charPoints[n].x;
+            }
+//            canvas.drawLine(0, charPoints[n].y, viewWidth, charPoints[n].y, mTextPaint);
+        }
+
+        // 计算居中偏移
+        int XOffset;
+        if(isVertical) {
+            XOffset = -(int)((((viewWidth - maxWidth - paddingRight) / 2 + maxWidth) - (paddingLeft + width / 2)) - (0.5 * ROW_HEIGHT));
+        } else {
+            XOffset = (int)(paddingLeft + (width - maxWidth - FONT_SIZE) / 2);
+        }
+        int YOffset = (int)(FONT_SIZE - baseLineHeight + DENSITY) + paddingTop
+                + ((int)(height - maxHeight - FONT_SIZE) / 2);
 
         // 绘制阴影
         if(isShadow) {
             mTextPaint.setShadowLayer(15, 0, 0, shadowColor);
         }
 
-        Point lastCharPoint = new Point(
-                isVertical ? (int)(viewWidth - FONT_SIZE) : 0, // 上一个文字的X
-                0// 上一个文字的Y[文字底部的值]
-        );
-        int XOffset;
-        if(isVertical) {
-            XOffset = - (int)(paddingRight + (width - rowInfo[0] * FONT_SIZE - (rowInfo[0]- 1) * ROW_HEIGHT) / 2);
-        } else {
-            XOffset = (int)(paddingLeft + (width - rowInfo[0] * FONT_SIZE - (rowInfo[0]- 1) * COLUMN_WIDTH) / 2);
-        }
-        int YOffset = (int)(mTextPaint.getTextSize() - 4 * DENSITY) + paddingTop
-                + (int)(((height - rowInfo[1] * FONT_SIZE - (rowInfo[1] - 1) * (isVertical ? COLUMN_WIDTH : ROW_HEIGHT)) / 2));
-        for (char c: chars) {
-            // 先画文字
-            if(NEW_LINE_CHAR == c) {// 换行刷新位子，不画文字
-            } else {
-                // 画文字
-                canvas.drawText(String.valueOf(c), lastCharPoint.x + XOffset, lastCharPoint.y + YOffset, mTextPaint);
-            }
-            // 刷新文字位子
-            lastCharPoint = measureCharHorizontalPosition(c,
-                    lastCharPoint.x, lastCharPoint.y,
-                    0, ((int)(0.5 * FONT_SIZE)),
-                    isVertical, (int)FONT_SIZE,
-                    (int)(width - FONT_SIZE), (int)(height - FONT_SIZE));
+//        mTextPaint.setColor(Color.RED);
+//        canvas.drawLine(0, maxHeight, viewWidth, maxHeight, mTextPaint);
+//        canvas.drawLine(maxWidth, 0, maxWidth, viewHeight, mTextPaint);
+//        canvas.drawLine((paddingLeft + width / 2), 0, (paddingLeft + width / 2), viewHeight, mTextPaint);
+//        canvas.drawLine(((viewWidth - maxWidth - paddingRight) / 2 + maxWidth), 0,
+//                ((viewWidth - maxWidth - paddingRight) / 2 + maxWidth), viewHeight, mTextPaint);
 
-            // 越界或者画完了
-            if(lastCharPoint == null) break;
+        // 画文字
+        for (int n = 0; n < charsLength; n++) {
+            char c = chars[n];
+            if(NEW_LINE_CHAR == c) {
+            } else {
+                Point charPoint = charPoints[n];
+                if(charPoint == null) break;// 文字越界不绘制
+                canvas.drawText(String.valueOf(c), charPoint.x + XOffset, charPoint.y + YOffset, mTextPaint);
+            }
         }
 
         Log("w:" + width + " h:" + height + " pl:" + paddingLeft + "  t:" + mText + "===" + mMaxTextSize+"===" +mTextPaint.getTextSize()+ "===");

@@ -15,27 +15,27 @@ What are you\n"
 
     <com.h3c.sverticaltextview.SVerticalTextView
         android:id="@+id/svtv"
-        android:layout_marginTop="200dp"
         android:visibility="visible"
-        android:layout_width="100dp"
-        android:layout_height="120dp"
-
+        android:layout_marginTop="20dp"
+        android:layout_width="300dp"
+        android:layout_height="220dp"
         android:layout_centerHorizontal="true"
         SVerticalTextView:SVerticalTextView_textColor="@android:color/black"
         android:text="我我是明星，我怕谁.xs" />
 
     <com.h3c.sverticaltextview.SVerticalTextView
         android:id="@+id/svtv2"
-        android:visibility="invisible"
+        android:visibility="visible"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/svtv"
         android:layout_marginTop="20dp"
-        android:layout_width="280dp"
-        android:layout_height="280dp"
+        android:layout_width="300dp"
+        android:layout_height="220dp"
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
         SVerticalTextView:SVerticalTextView_textColor="@android:color/black"
+        SVerticalTextView:SVerticalTextView_minTextSize="14sp"
         android:text="我我是明星\n我怕谁.xs" />
 </RelativeLayout>

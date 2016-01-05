@@ -19,22 +19,34 @@ public class MainActivity extends AppCompatActivity {
         tt.setText("Why are you so Diao?");
 
         final SVerticalTextView tv = ((SVerticalTextView) findViewById(R.id.svtv));
-//        tv.setText("Why are you so Diao?", false, true);
-//        tv.setText("我就是我?", false, true);
-        tv.setText("Why", false, true);
+//        tv.setText("天荒看你了呢\n地老昆士兰弗兰克阿莱克斯能否离开我呢份", false, true);
+        tv.setText("Why are you so Diao?", false, true);
 
         final SVerticalTextView tv2 = ((SVerticalTextView) findViewById(R.id.svtv2));
         tv2.setText("天荒看你了呢\n地老昆士兰弗兰克阿莱克斯能否离开我呢份快乐饿了咖啡能为了肯放开论文疯了快五年翻了可能为分开两年未开发为嫩肤\n你\nsnnw 问哦", false, true);
+//        tv2.setText("天荒看你了呢\n地老昆士兰弗兰克阿莱克斯能否离开我呢份", false, true);
+
+        tv2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 横竖切换
+                if(tv2.getOrientation() == LinearLayout.HORIZONTAL) {
+                    tv2.setOrientation(LinearLayout.VERTICAL);
+                } else {
+                    tv2.setOrientation(LinearLayout.HORIZONTAL);
+                }
+            }
+        });
 
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // 横竖切换
-//                if(tv.getOrientation() == LinearLayout.HORIZONTAL) {
-//                    tv.setOrientation(LinearLayout.VERTICAL);
-//                } else {
-//                    tv.setOrientation(LinearLayout.HORIZONTAL);
-//                }
+                if(tv.getOrientation() == LinearLayout.HORIZONTAL) {
+                    tv.setOrientation(LinearLayout.VERTICAL);
+                } else {
+                    tv.setOrientation(LinearLayout.HORIZONTAL);
+                }
             }
         });
     }
