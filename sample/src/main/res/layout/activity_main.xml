@@ -17,8 +17,9 @@ What are you\n"
         android:id="@+id/svtv"
         android:layout_marginTop="200dp"
         android:visibility="visible"
-        android:layout_width="280dp"
-        android:layout_height="280dp"
+        android:layout_width="100dp"
+        android:layout_height="120dp"
+
         android:layout_centerHorizontal="true"
         SVerticalTextView:SVerticalTextView_textColor="@android:color/black"
         android:text="我我是明星，我怕谁.xs" />

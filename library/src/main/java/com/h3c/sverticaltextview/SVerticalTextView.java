@@ -35,9 +35,9 @@ public class SVerticalTextView extends View {
     private int mTextColor = Color.BLACK;// 文本颜色
     private int shadowColor = Color.WHITE;// 阴影颜色
     private float mMaxTextSize;// 最大文字大小
-    private int mMinTextSize = 16 * 3;// 最小文字大小
+    private float mMinTextSize = -1;// 最小文字大小
     private int LETTER_PADDING = 2;// 字母间距
-    private int SPACE_PADDING = 4 * 3;// 空格间距
+    private int SPACE_PADDING;// 空格间距
     private TextPaint mTextPaint;
 
     public SVerticalTextView(Context context) {
@@ -49,6 +49,7 @@ public class SVerticalTextView extends View {
     public SVerticalTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SVerticalTextView);
+        setMinTextSize(a.getDimension(R.styleable.SVerticalTextView_SVerticalTextView_minTextSize, 0));
         setMaxTextSize(a.getDimension(R.styleable.SVerticalTextView_SVerticalTextView_maxTextSize, 0));
         setTextColor(a.getColor(R.styleable.SVerticalTextView_SVerticalTextView_textColor, Color.BLACK));
         a.recycle();
@@ -61,6 +62,10 @@ public class SVerticalTextView extends View {
      */
     private void init() {
         DENSITY = getResources().getDisplayMetrics().density;
+        if(mMinTextSize < 0) {
+            mMinTextSize = (int) (DENSITY * 5);
+        }
+        SPACE_PADDING = (int) (DENSITY * 4);
 
         mTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setDither(true);
@@ -89,6 +94,10 @@ public class SVerticalTextView extends View {
 
     public void setMaxTextSize(float size) {
         mMaxTextSize = size;
+    }
+
+    public void setMinTextSize(float size) {
+        mMinTextSize = size;
     }
 
     /**
@@ -303,9 +312,9 @@ public class SVerticalTextView extends View {
             int maxCount;
 
             if(isVertical) {
-                maxCount = height / mMinTextSize + COLUMN_WIDTH;
+                maxCount = (int)(height / mMinTextSize + COLUMN_WIDTH);
             } else {
-                maxCount = width / mMinTextSize + COLUMN_WIDTH;
+                maxCount = (int)(width / mMinTextSize + COLUMN_WIDTH);
             }
 
             int moreCount = 0;// 多出来的列数
