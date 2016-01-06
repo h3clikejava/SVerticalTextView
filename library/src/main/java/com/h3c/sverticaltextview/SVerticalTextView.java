@@ -222,6 +222,7 @@ public class SVerticalTextView extends View {
         // 计算居中偏移
         int XOffset;
         if(isVertical) {
+            maxWidth = maxWidth + paddingLeft;
             XOffset = (int)(paddingLeft - ((maxWidth + (0.5 * ROW_HEIGHT)
                     - (paddingLeft + width / 2)))
                     - ((viewWidth - maxWidth - paddingRight - (0.5 * ROW_HEIGHT)) / 2));
@@ -238,7 +239,6 @@ public class SVerticalTextView extends View {
             mTextPaint.setShadowLayer(0, 0, 0, shadowColor);
         }
 
-//        mTextPaint.setColor(Color.RED);
 //        canvas.drawLine(0, maxHeight, viewWidth, maxHeight, mTextPaint);
 //        canvas.drawLine(maxWidth, 0, maxWidth, viewHeight, mTextPaint);
 //        canvas.drawLine((int)(maxWidth + (0.5 * ROW_HEIGHT)), 0, (int)(maxWidth + (0.5 * ROW_HEIGHT)), viewHeight, mTextPaint);
