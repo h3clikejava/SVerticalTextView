@@ -31,6 +31,7 @@ public class SVerticalTextView extends View {
 
     private boolean isVertical = false;// 是否垂直显示文本
     private boolean isShadow = false;// 文字阴影
+    private boolean isFitMode = true;// 充满模式［会自动撑满整个View，否则会按照文字默认不换行计算字号］
     private String mText;// 文本
     private int mTextColor = Color.BLACK;// 文本颜色
     private int shadowColor = Color.WHITE;// 阴影颜色
@@ -62,9 +63,6 @@ public class SVerticalTextView extends View {
      */
     private void init() {
         DENSITY = getResources().getDisplayMetrics().density;
-        if(mMinTextSize < 0) {
-            mMinTextSize = (int) (DENSITY * 5);
-        }
         SPACE_PADDING = (int) (DENSITY * 4);
 
         mTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
@@ -200,7 +198,8 @@ public class SVerticalTextView extends View {
         int maxWidth = charPoints[0].x;
         int maxHeight = charPoints[0].y;
         for (int n = 1; n < charsLength; n++) {
-            charPoints[n] = measureCharHorizontalPosition(chars[n - 1],
+            charPoints[n] = measureCharHorizontalPosition(
+                    chars[n - 1], chars[n],
                     charPoints[n - 1].x, charPoints[n - 1].y,
                     0, ((int)(0.5 * FONT_SIZE)),
                     isVertical, (int)FONT_SIZE,
@@ -409,6 +408,7 @@ public class SVerticalTextView extends View {
         int minInRow = -1;// 行最小字数
         int minInColumn = -1;// 列最小字数
 
+        // 算出默认最大行数和最大列数
         String[] tmpNewLineTexts = text.split("\\n");
         int maxTextCountInColumn = tmpNewLineTexts.length;// 最大行数
         int maxTextCountInARow = 0;// 最大列数
@@ -418,6 +418,7 @@ public class SVerticalTextView extends View {
             }
         }
 
+        // 得到总格子数
         count = maxTextCountInColumn * maxTextCountInARow;
         if(isVertical) {
             minInColumn = maxTextCountInARow;
@@ -445,7 +446,9 @@ public class SVerticalTextView extends View {
             int countInRow = (int)(width / (realFontWidth + (isVertical ? ROW_HEIGHT : COLUMN_WIDTH)));
             int countInColumn = (int)(height / (realFontWidth + (isVertical ? COLUMN_WIDTH : ROW_HEIGHT)));
             int tmpFontCount = (countInRow * countInColumn);
-            if(tmpFontCount >= count && countInRow > minInRow && countInColumn > minInColumn) {
+
+
+            if((tmpFontCount >= count) && (isFitMode || (!isFitMode && countInRow > minInRow && countInColumn > minInColumn))) {
                 flag = false;
             } else {
                 realFontWidth -= DENSITY;
@@ -485,7 +488,7 @@ public class SVerticalTextView extends View {
     /**
      * 测量文字绘制的位置
      */
-    private Point measureCharHorizontalPosition(char c,
+    private Point measureCharHorizontalPosition(char c, char nextC,
                                                 int lastX, int lastY,
                                                 int widthPadding, int heightPadding,
                                                 boolean isVertical, int fontSize,
@@ -606,6 +609,8 @@ public class SVerticalTextView extends View {
 
         // 越界换行
         if(newX > viewWidth || newX < 0 || newY > viewHeight) {
+            // 如果自动换行和手动换行冲突，就不用自动换行了
+            if(NEW_LINE_CHAR == nextC) return new Point(newX, newY);
             if(isVertical) {
                 newX = lastX - fontSize - heightPadding;
                 newY = 0;
